@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parse02.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciestrad <ciestrad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszamora <aszamora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 11:20:35 by ciestrad          #+#    #+#             */
-/*   Updated: 2024/12/03 12:25:20 by ciestrad         ###   ########.fr       */
+/*   Updated: 2024/12/04 14:10:06 by aszamora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_color(char *line)
 		return (-1);
 	if (count_arrays(element) != 3)
 		return (free_array(element), -1);
-	if (iscolor(element[0]) == 0 || iscolor(element[1]) == 0 
+	if (iscolor(element[0]) == 0 || iscolor(element[1]) == 0
 		|| iscolor(element[2]) == 0)
 		return (free_array(element), -1);
 	color = ft_atoi(element[0]) * 256 * 256

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_struct.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciestrad <ciestrad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszamora <aszamora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 11:23:35 by ciestrad          #+#    #+#             */
-/*   Updated: 2024/12/03 12:21:48 by ciestrad         ###   ########.fr       */
+/*   Updated: 2024/12/05 11:57:55 by aszamora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	get_element(t_map *map, char *line)
 {
 	char	**element;
-	printf("%i", map->c);
+
 	element = ft_split(line, ' ');
 	if (!element)
 		return (10);
@@ -31,7 +31,7 @@ int	get_element(t_map *map, char *line)
 		map->ea = ft_strdup(element[1]);
 	else if (ft_strcmp(element[0], "F") == 0 && map->f == -1)
 		map->f = ft_color(element[1]);
-	else if (ft_strcmp(element[0], "C") == 0 && map->c == -1)
+	else if (ft_strcmp(element[0], "C") == 0 && map->c == 1)
 		map->c = ft_color(element[1]);
 	else
 		return (free_array(element), 2);
@@ -60,8 +60,9 @@ int	check_element(t_map *map, char *line)
 int	get_map(int fd, t_map *map, char *file, int size)
 {
 	int	i;
-	printf("aqui");
+
 	i = 0;
+	printf("aqui");
 	map->width = ft_strlen(file);
 	while (file)
 	{
@@ -88,10 +89,11 @@ int	read_file(t_map *map, char *file, int size)
 		return (5);
 	while (error == 0 && get_next_line(fd, &line, 0) != 0)
 		error = check_element(map, line);
-	printf("%i", error);
+	printf("error: %d\n", error);
 	if (error != -1 || line == NULL)
 		return (error);
 	error = get_map(fd, map, file, size);
+	printf("error2: %d\n", error);
 	if (error)
 		return (error);
 	return (0);

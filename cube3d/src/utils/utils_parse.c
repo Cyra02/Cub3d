@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciestrad <ciestrad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszamora <aszamora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 12:20:44 by ciestrad          #+#    #+#             */
-/*   Updated: 2024/12/02 14:07:18 by ciestrad         ###   ########.fr       */
+/*   Updated: 2024/12/04 14:10:12 by aszamora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3D.h"
-
 
 /*mira el caracter necesario en sí si no encuentra caracter return (0)*/
 int	is_set(char c, char *set)

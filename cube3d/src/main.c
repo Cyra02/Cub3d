@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciestrad <ciestrad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszamora <aszamora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 12:21:36 by ciestrad          #+#    #+#             */
-/*   Updated: 2024/12/03 10:44:12 by ciestrad         ###   ########.fr       */
+/*   Updated: 2024/12/04 12:59:38 by aszamora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,12 @@ int	main(int argc, char **argv)
 	ft_memset(&game, 0, sizeof(t_game));
 	error = check_input(&(game.map), argv[1]);
 	printf("no =%s\n", game.map.no);
+	printf("so =%s\n", game.map.so);
+	printf("ea =%s\n", game.map.ea);
+	printf("we =%s\n", game.map.we);
+	printf("f =%d\n", game.map.f);
+	printf("c =%d\n", game.map.c);
 	if (error)
 		return (free_map(&game.map), ft_error(error));
-	
 	return (0);
-	
 }

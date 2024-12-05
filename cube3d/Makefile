@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ciestrad <ciestrad@student.42.fr>          +#+  +:+       +#+         #
+#    By: aszamora <aszamora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/21 12:03:47 by ciestrad          #+#    #+#              #
-#    Updated: 2024/12/03 12:18:33 by ciestrad         ###   ########.fr        #
+#    Updated: 2024/12/05 11:46:29 by aszamora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ FILES = get_next_line/get_next_line \
 		src/errors \
 		src/parseo/ft_parseo \
 		src/parseo/parse_struct \
+		src/parseo/parsing_check \
 		src/utils/utils_parse \
 		src/utils/utils_parse02 \
 

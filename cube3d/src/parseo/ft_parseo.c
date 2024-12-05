@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parseo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciestrad <ciestrad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszamora <aszamora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:53:00 by ciestrad          #+#    #+#             */
-/*   Updated: 2024/12/03 12:05:20 by ciestrad         ###   ########.fr       */
+/*   Updated: 2024/12/05 11:44:12 by aszamora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,10 @@ int	check_input(t_map *map, char *line)
 	if (!map->map)
 		return (10);
 	error = read_file(map, line, map->height);
-
+	if (error)
+		return (error);
+	error = check_map(map);
+	if (error)
+		return (error);
 	return (0);
 }

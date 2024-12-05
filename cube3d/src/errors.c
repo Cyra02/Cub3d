@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ciestrad <ciestrad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aszamora <aszamora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 11:42:37 by ciestrad          #+#    #+#             */
-/*   Updated: 2024/11/27 12:33:52 by ciestrad         ###   ########.fr       */
+/*   Updated: 2024/12/05 11:24:21 by aszamora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,16 @@ int	ft_error(int code)
 		ft_putstr_fd("MAP NEEDS TO HAVE THESE CHARACTERS '01NSEW'", 2);
 	if (code == 5)
 		ft_putstr_fd("FILE ERROR", 2);
+	if (code == 6)
+		ft_putstr_fd("Not all description line are present\n \
+Usage: One line of each element\
+``NO, SO, WE, EA, F, C`` only !\n", 2);
+	if (code == 7)
+		ft_putstr_fd("No map in file\n", 2);
+	if (code == 8)
+		ft_putstr_fd("ONE PLAYER IS NEEDED", 2);
+	if (code == 9)
+		ft_putstr_fd("Map must be enclosed\n", 2);
 	if (code == 10)
 		ft_putstr_fd("MALLOC ERROR", 2);
 	return (0);

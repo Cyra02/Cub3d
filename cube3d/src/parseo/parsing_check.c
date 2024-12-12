@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszamora <aszamora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ciestrad <ciestrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:19:52 by aszamora          #+#    #+#             */
-/*   Updated: 2024/12/05 11:50:48 by aszamora         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:54:18 by ciestrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,48 +23,29 @@ int	check_elements(t_map *map)
 	return (0);
 }
 
-int	check_around(t_map *map, int i, int j)
+void	flot_fill(t_map *map, char **map_copy, int y, int x)
 {
-	if (i <= 0 || j <= 0 || i >= map->height - 1 || j >= map->width - 1)
-		return (1);
-	else if (map->map[i - 1][j] == ' ')
-		return (1);
-	else if (map->map[i + 1][j] == ' ')
-		return (1);
-	else if (map->map[i][j - 1] == ' ')
-		return (1);
-	else if (map->map[i][j + 1] == ' ')
-		return (1);
-	else if (map->map[i + 1][j + 1] == ' ')
-		return (1);
-	else if (map->map[i - 1][j - 1] == ' ')
-		return (1);
-	else if (map->map[i + 1][j - 1] == ' ')
-		return (1);
-	else if (map->map[i - 1][j + 1] == ' ')
-		return (1);
-	return (0);
+	if (map_copy[y][x] == '1')
+		return ;
+	if (y == 0 || x == 0 || y == map->height -1 || x == map->width)
+		ft_error(9);
+	map_copy[y][x] = '1';
+	flot_fill(map, map_copy, y + 1, x);
+	flot_fill(map, map_copy, y - 1, x);
+	flot_fill(map, map_copy, y, x + 1);
+	flot_fill(map, map_copy, y, x - 1);
 }
 
-int	check_walls(t_map *map)
+static void	init_angel(t_map *map, char pos)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < map->height)
-	{
-		j = 0;
-		while (j < map->width)
-		{
-			if (is_set(map->map[i][j], "0NSWE")
-				&& check_around(map, i, j) != 0)
-				return (9);
-			j++;
-		}
-		i++;
-	}
-	return (0);
+	if (pos == 'N')
+		map->player.angulo = NORTH;
+	if (pos == 'S')
+		map->player.angulo = SOUTH;
+	if (pos == 'E')
+		map->player.angulo = EAST;
+	if (pos == 'W')
+		map->player.angulo = WEST;
 }
 
 int	check_players(t_map *map)
@@ -73,28 +54,31 @@ int	check_players(t_map *map)
 	int	j;
 	int	count;
 
-	i = 0;
+	i = -1;
 	count = 0;
-	while (map->map[i])
+	while (map->map[++i])
 	{
-		j = 0;
-		while (map->map[i][j])
+		j = -1;
+		while (map->map[i][++j])
 		{
 			if (map->map[i][j] == 'N' || map->map[i][j] == 'S'
 				|| map->map[i][j] == 'E' || map->map[i][j] == 'W')
+			{
+				map->player.pos_y = i * BLOCK_SIZE;
+				map->player.pos_x = j * BLOCK_SIZE;
+				map->player.player++;
+				init_angel(map, map->map[i][j]);
 				count++;
-			j++;
+			}
 		}
-		i++;
 	}
-	if (count != 1)
-		return (8);
-	return (0);
+	return ((count != 1) * 8);
 }
 
 int	check_map(t_map *map)
 {
-	int	error;
+	int		error;
+	char	**map_cpy;
 
 	error = check_elements(map);
 	if (error)
@@ -102,8 +86,12 @@ int	check_map(t_map *map)
 	error = check_players(map);
 	if (error)
 		return (error);
-	error = check_walls(map);
-	if (error)
-		return (error);
+	map_cpy = copy_map(map);
+	flot_fill(map, map_cpy,
+		map->player.pos_y / BLOCK_SIZE, map->player.pos_x / BLOCK_SIZE);
+	for (int i = 0; i < map->height; i++)
+	{
+		printf("%s\n", map_cpy[i]);
+	}
 	return (0);
 }

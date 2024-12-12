@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parse02.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszamora <aszamora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ciestrad <ciestrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 11:20:35 by ciestrad          #+#    #+#             */
-/*   Updated: 2024/12/04 14:10:06 by aszamora         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:15:16 by ciestrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,21 @@ int	ft_color(char *line)
 		+ ft_atoi(element[1]) * 256
 		+ ft_atoi(element[2]);
 	return (free_array(element), color);
+}
+
+char	**copy_map(t_map *map)
+{
+	char	**temp;
+	int		i;
+
+	i = 0;
+	temp = malloc(sizeof(char *) * map->height + 1);
+	if (!temp)
+		return (ft_error(8), NULL);
+	while (map->map[i])
+	{
+		temp[i] = ft_strdup(map->map[i]);
+		i++;
+	}
+	return (temp);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszamora <aszamora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ciestrad <ciestrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 12:21:36 by ciestrad          #+#    #+#             */
-/*   Updated: 2024/12/04 12:59:38 by aszamora         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:01:51 by ciestrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ int	main(int argc, char **argv)
 	printf("we =%s\n", game.map.we);
 	printf("f =%d\n", game.map.f);
 	printf("c =%d\n", game.map.c);
+
+	printf("height =%d\n", game.map.height);
+	printf("width =%d\n", game.map.width);
 	if (error)
 		return (free_map(&game.map), ft_error(error));
 	return (0);

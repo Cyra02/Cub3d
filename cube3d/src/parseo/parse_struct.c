@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_struct.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszamora <aszamora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ciestrad <ciestrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 11:23:35 by ciestrad          #+#    #+#             */
-/*   Updated: 2024/12/05 11:57:55 by aszamora         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:55:08 by ciestrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	get_element(t_map *map, char *line)
 		map->ea = ft_strdup(element[1]);
 	else if (ft_strcmp(element[0], "F") == 0 && map->f == -1)
 		map->f = ft_color(element[1]);
-	else if (ft_strcmp(element[0], "C") == 0 && map->c == 1)
+	else if (ft_strcmp(element[0], "C") == 0 && map->c == -1)
 		map->c = ft_color(element[1]);
 	else
 		return (free_array(element), 2);
@@ -46,7 +46,7 @@ int	check_element(t_map *map, char *line)
 		return (free(line), 0);
 	else
 	{
-		if (set_only(line, " 01NSEW"))
+		if (set_only(line, " 01NSEW\n"))
 			return (-1);
 		error = get_element(map, line);
 		free(line);
@@ -57,20 +57,40 @@ int	check_element(t_map *map, char *line)
 	return (0);
 }
 
+size_t	max_line(char **map)
+{
+	size_t	max;
+	int		i;
+
+	i = 0;
+	max = 0;
+	while (map[i])
+	{
+		if (max < ft_strlen(map[i]))
+			max = ft_strlen(map[i]);
+		i++;
+	}
+	return (max);
+}
+
 int	get_map(int fd, t_map *map, char *file, int size)
 {
 	int	i;
 
 	i = 0;
-	printf("aqui");
-	map->width = ft_strlen(file);
 	while (file)
 	{
 		map->map[i] = file;
-		if (file && (int)ft_strlen(file) > map->width)
-			map->width = ft_strlen(file);
 		get_next_line(fd, &file, 0);
+		printf("linea: %s\n", map->map[i]);
 		i++;
+	}
+	map->width = max_line(map->map);
+	map->map = fill_map_x(map->map);
+	printf("\n");
+	for (int x = 0; x < map->height; x++)
+	{
+		printf("linea: %s\n", map->map[x]);
 	}
 	if (i != size)
 		return (free_map(map), 10);
@@ -89,11 +109,9 @@ int	read_file(t_map *map, char *file, int size)
 		return (5);
 	while (error == 0 && get_next_line(fd, &line, 0) != 0)
 		error = check_element(map, line);
-	printf("error: %d\n", error);
 	if (error != -1 || line == NULL)
 		return (error);
-	error = get_map(fd, map, file, size);
-	printf("error2: %d\n", error);
+	error = get_map(fd, map, line, size);
 	if (error)
 		return (error);
 	return (0);

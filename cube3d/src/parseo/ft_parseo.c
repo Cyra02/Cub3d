@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parseo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszamora <aszamora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ciestrad <ciestrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:53:00 by ciestrad          #+#    #+#             */
-/*   Updated: 2024/12/05 11:44:12 by aszamora         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:54:48 by ciestrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ int	set_map_size(char *file, int *size)
 		return (5);
 	while (get_next_line(fd, &line, 0) != 0)
 	{
-		if (set_only(line, " 01NSEW") && !set_only(line, " "))
+		if (set_only(line, " 01NSEW\n") && !set_only(line, " "))
 			break ;
 		free(line);
 	}
 	while (line)
 	{
-		if (ft_strlen(line) && set_only(line, " 01NSEW"))
-			size += 1;
+		if (ft_strlen(line) && set_only(line, " 01NSEW\n"))
+			*size += 1;
 		else
 			break ;
 		free(line);

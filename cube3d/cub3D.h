@@ -6,7 +6,7 @@
 /*   By: ciestrad <ciestrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 12:22:08 by ciestrad          #+#    #+#             */
-/*   Updated: 2024/12/12 12:53:46 by ciestrad         ###   ########.fr       */
+/*   Updated: 2025/01/08 12:25:03 by ciestrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # include "libft/libft.h"
-# include "minilibx/mlx.h"
+# include "MLX42/include/MLX42/MLX42.h"
 # include <stdio.h>
 # include <fcntl.h>
 # include <stdlib.h>
@@ -32,6 +32,9 @@
 # define EAST 0
 # define WEST PI
 
+# define WIDTH 1920
+# define HEIGHT 1080
+
 # define ANGLE_TO_RADIAN 0.0174533
 
 # ifndef BUFFER_SIZE
@@ -40,12 +43,23 @@
 
 typedef struct s_player
 {
-	double	pos_y;
-	double	pos_x; 
+	double	py;
+	double	px;
 	int		player; // si hay player
 	double	angulo;
-	
+	double	fov;
 }			t_player;
+
+//$(CC) $(CFLAGS) $(MLXFLAGS) $^ libft.a libmlx.a -o $@
+
+typedef struct s_ray
+{
+	double	angle;
+	double	lenght;
+	char	type;
+	double	rx;
+	double	ry;
+}	t_ray;
 
 typedef struct s_map
 {
@@ -63,7 +77,12 @@ typedef struct s_map
 
 typedef struct s_game
 {
-	t_map	map;
+	t_map		map;
+	t_player	player;
+	mlx_t		*mlx;
+	mlx_image_t	*img;
+	t_ray		rayo[WIDTH];
+	
 }	t_game;
 
 
@@ -110,4 +129,15 @@ char	*get_next_line(int fd, char **out, int clear);
 
 //----parse_grid----
 char	**fill_map_x(char **map);
+
+// RAYOS
+
+//----ray_cating----
+void	rayos(t_game *game);
+void	which_angle(t_game *game, double angle, t_ray *rayo_h, t_ray *rayo_v);
+void	init_rayo(t_ray *rayo_h, t_ray *rayo_v);
+
+//----ray_utils----
+double	radian_circle(double angle);
+
 #endif

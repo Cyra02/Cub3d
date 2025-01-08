@@ -6,14 +6,22 @@
 #    By: ciestrad <ciestrad@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/21 12:03:47 by ciestrad          #+#    #+#              #
-#    Updated: 2024/12/10 12:13:18 by ciestrad         ###   ########.fr        #
+#    Updated: 2025/01/08 12:14:54 by ciestrad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = CUB3D
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror #-g3 -fsanitize=address
-MLXFLAGS = -lXext -lX11 -lm #-g3 -fsanitize=address #-L . -lmlx -framework OpenGL -framework AppKit
+LIBFT_PATH	:=	libft
+LIBFT		:=	libft.a
+
+MLX			:=	libmlx42.a
+MLX_PATH	:=	MLX42/build
+LIBMLX		:=	./MLX42
+OBJS_FAGS	:=	$(MLX) -ldl -lglfw -pthread -lm
+CC			:=	gcc
+CFLAGS		:=	-Wextra -Wall -Werror -Wunreachable-code -Ofast -Iincludes -g3
 
 FILES = get_next_line/get_next_line \
 		src/main \
@@ -24,43 +32,46 @@ FILES = get_next_line/get_next_line \
 		src/parseo/parse_grid \
 		src/utils/utils_parse \
 		src/utils/utils_parse02 \
+		src/rayos/ray_casting \
+		src/rayos/ray_select \
+		src/rayos/ray_utils \
 
 SRCS = $(addsuffix .c,$(FILES))
 OBJS = $(addsuffix .o,$(FILES))
 
 all: $(NAME)
 
-.c.o: $(SRCS)
-	@$(CC) -I includes/ $(CFLAGS) -c $^ -o $@ >/dev/null
+$(NAME): $(OBJS) $(LIBFT) $(MLX)
+	@clear
+	@printf "\033[0;32;3mLIBFT\t\t\033[0;32;0m✅\n"
+	@sleep 0.2;
+	@$(CC) $(CFLAGS) $(OBJS) $(OBJS_FAGS) $(MLX) $(LIBFT) -o $(NAME)
+	@printf "\033[0;32;3mCubed\t\033[0;32;0m✅\033[0;32;3m\n\n"
 
-$(NAME):  $(OBJS)
-	@printf "\e[32mObjects Compiled✅\e[0m\n"
-	@printf "\e[32mCompiling minilibx and libft...⏳\e[0m\n"
-	@$(MAKE) -C minilibx >/dev/null
-	@$(MAKE) -C libft >/dev/null
-	@mv libft/libft.a .
-	@mv minilibx/libmlx.a .
-	@$(CC) $(CFLAGS) $(MLXFLAGS) $^ libft.a libmlx.a -o $@
-	@printf "\e[32mReady to play 🤖\e[0m\n"
+$(OBJ_DIR)%.o: $(SRC_PATH)%.c
+	@mkdir -p $(@D)
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-sanitize: #this rule adds the sanitize flag to CFLAGS
-	@printf "\e[32mAdding Sanitize to CFLAGS\e[0m\n"
-	$(eval CFLAGS += -fsanitize=address -g3)
+$(LIBFT):
+	@make -C $(LIBFT_PATH)
+	@mv $(LIBFT_PATH)/$(LIBFT) ./
 
-sani: sanitize all #this rule changes CFLAGS to include sanitize and then compiles the program as usual
+$(MLX):
+	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
+	@mv $(MLX_PATH)/$(MLX) ./
 
 clean:
-	@make clean -C libft >/dev/null
-	@make clean -C minilibx >/dev/null
-	@rm -rf $(OBJS)
-	@printf "\e[31m*.o=>🗑️\e[0m\n"
+	@rm -fr $(OBJ_DIR)
+	@make clean -C $(LIBFT_PATH)
 
-fclean: clean
-	@rm -rf $(NAME) >/dev/null
-	@rm -rf libft.a >/dev/null
-	@rm -rf libmlx.a >/dev/null
-	@printf "\e[31m(so_long && libmlx.a && libftprintf.a)=>🗑️\e[0m\n"
-
+fclean:
+	@rm -fr $(OBJS)
+	@rm -f $(NAME)
+	@rm -f $(MLX)
+	@rm -fr $(MLX_PATH)
+	@rm -f $(LIBFT)
+	@make fclean -C $(LIBFT_PATH)
+	
 re: fclean all
 
 .PHONY: all clean fclean re

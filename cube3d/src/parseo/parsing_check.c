@@ -6,7 +6,7 @@
 /*   By: ciestrad <ciestrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:19:52 by aszamora          #+#    #+#             */
-/*   Updated: 2024/12/12 12:54:18 by ciestrad         ###   ########.fr       */
+/*   Updated: 2025/01/08 12:23:52 by ciestrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ int	check_players(t_map *map)
 			if (map->map[i][j] == 'N' || map->map[i][j] == 'S'
 				|| map->map[i][j] == 'E' || map->map[i][j] == 'W')
 			{
-				map->player.pos_y = i * BLOCK_SIZE;
-				map->player.pos_x = j * BLOCK_SIZE;
+				map->player.py = i * BLOCK_SIZE;
+				map->player.px = j * BLOCK_SIZE;
 				map->player.player++;
 				init_angel(map, map->map[i][j]);
 				count++;
@@ -88,7 +88,7 @@ int	check_map(t_map *map)
 		return (error);
 	map_cpy = copy_map(map);
 	flot_fill(map, map_cpy,
-		map->player.pos_y / BLOCK_SIZE, map->player.pos_x / BLOCK_SIZE);
+		map->player.py / BLOCK_SIZE, map->player.px / BLOCK_SIZE);
 	for (int i = 0; i < map->height; i++)
 	{
 		printf("%s\n", map_cpy[i]);

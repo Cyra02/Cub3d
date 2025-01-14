@@ -6,7 +6,7 @@
 #    By: ciestrad <ciestrad@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/21 12:03:47 by ciestrad          #+#    #+#              #
-#    Updated: 2025/01/08 12:14:54 by ciestrad         ###   ########.fr        #
+#    Updated: 2025/01/10 11:49:42 by ciestrad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ FILES = get_next_line/get_next_line \
 		src/rayos/ray_casting \
 		src/rayos/ray_select \
 		src/rayos/ray_utils \
+		src/draw/draw_walls\
 
 SRCS = $(addsuffix .c,$(FILES))
 OBJS = $(addsuffix .o,$(FILES))

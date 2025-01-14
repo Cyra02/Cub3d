@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aszamora <aszamora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ciestrad <ciestrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 11:42:37 by ciestrad          #+#    #+#             */
-/*   Updated: 2024/12/05 11:24:21 by aszamora         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:37:10 by ciestrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,7 @@ Usage: One line of each element\
 		ft_putstr_fd("Map must be enclosed\n", 2);
 	if (code == 10)
 		ft_putstr_fd("MALLOC ERROR", 2);
+	if (code == 11)
+		ft_putstr_fd("TEXTURE ERROR", 2);
 	return (0);
 }
